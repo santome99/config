@@ -1,0 +1,42 @@
+server:
+  port: 8082
+
+spring:
+  config:
+    activate:
+      on-profile: default
+  application:
+    name: reserve-manager
+  datasource:
+    url: jdbc:mysql://${reserve-manager-db:localhost}:3306/reserve-manager-db
+    username: root
+    password: root
+  jpa:
+    hibernate:
+      ddl-auto: update
+app:
+  environment:
+    hotel-manager-host: ${hotel-manager-host:localhost}
+    flight-manager-host: ${flight-manager-host:localhost}
+
+--- # Testing configuration
+
+server:
+  port: ${random.int(5000,5100)}
+
+spring:
+  config:
+    activate:
+      on-profile: test
+  application:
+    name: flight-manager
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:testdb
+    username: diego
+    password: diego
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
